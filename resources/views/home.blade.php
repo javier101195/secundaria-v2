@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     {{-- <materias/> --}}
-    <materias :mat="{{ $mat }}"  ></materias>
+    <materias ></materias>
     
 </div>
 @endsection

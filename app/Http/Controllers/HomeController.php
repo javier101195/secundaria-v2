@@ -24,60 +24,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-
-        /* $mat = DB::table('materias')
-        ->join ('maestros', 'materias.maestro_id', '=', 'maestros.id')
-        ->select('materias.nombre as MatNombre','materias.semestre','materias.creditos',
-        'materias.maestro_id','maestros.id as MaesId','maestros.nombre as MaesNombre')
-        ->get();
-        return view('home', compact("mat")); */
-        //$materias = DB::table('materias')->get();
-
-        /* $maes_select = DB::table('materias')
-        ->join ('maestros', 'materias.maestro_id', '=', 'maestros.id')
-        ->select('materias.nombre as MatNombre','materias.semestre','materias.creditos',
-        'materias.maestro_id','maestros.id as MaesId','maestros.nombre as MaesNombre')
-        ->where('materias.maestro_id','=','')
-        ->get(); */
-        
-        $mat = DB::table('materias')
-        ->join ('maestros', 'materias.maestro_id', '=', 'maestros.id')
-        ->select('materias.nombre as MatNombre','materias.semestre','materias.creditos',
-        'materias.maestro_id','maestros.id as MaesId','maestros.nombre as MaesNombre')
-        ->get();
-
-
-        //return (compact("mat", 'materias'));
-        return view('home',compact("mat"));
+        return view('home');
     }
-
-    /* public function listaMaterias(Request $request){
-        return DB::table('materias')
-        ->join ('maestros', 'materias.maestro_id', '=', 'maestros.id')
-        ->select('materias.nombre as MatNombre','materias.semestre','materias.creditos',
-        'materias.maestro_id','maestros.id as MaesId','maestros.nombre as MaesNombre')
-        ->where('materias.maestro_id','=','$request')
-        ->get();
-
-
-    } */
-
 
     public function store(Request $request)
     {
-        //dd ($request->all());
-
-        /* $maes_select = DB::table('materias')
-        ->join ('maestros', 'materias.maestro_id', '=', 'maestros.id')
-        ->select('materias.nombre as MatNombre','materias.semestre','materias.creditos',
-        'materias.maestro_id','maestros.id as MaesId','maestros.nombre as MaesNombre')
-        ->where('materias.maestro_id','=',compact('request'))
-        ->get(); */
-
-        //dd($maes_select); 
-        //return (compact('maes_select'));
-
-        
+       
         
     }
     public function consulta(Request $request, $id)

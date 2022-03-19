@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Carga_Academica;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Models\User;
-use App\Models\Materia;
 use Illuminate\Support\Arr;
 
 class CargaAcademicaController extends Controller
@@ -57,26 +55,25 @@ class CargaAcademicaController extends Controller
  
         $datos= Arr::flatten($array);
         return ($datos);
-        //dd($flattened);
+        //dd($datos);
 
     }
 
     public function listaMaterias (Request $request, $id){
-
-        return DB::table('carga_academica as ca')
-        ->join('materias as mat', 'ca.materia_id', '=', 'mat.id')
+        return DB ::table('materias as mat')
+        ->leftJoin('carga_academica as ca', 'mat.id', '=', 'ca.materia_id')
         ->select('ca.id as ca_id','mat.id','mat.nombre as mat_nombre','ca.materia_id','mat.creditos')
+        ->whereNotNull('ca.user_id')
         ->where('ca.user_id','=', $id)
         ->get();
     }
 
     public function listaMateriasNo (Request $request, $id){
-
         return DB ::table('materias as mat')
         ->leftJoin('carga_academica as ca', 'mat.id', '=', 'ca.materia_id')
-        ->select('mat.id','mat.nombre as mat_nombre','ca.materia_id','mat.creditos')
-        ->where('ca.user_id','=', null)
-        ->orwhere('ca.user_id','!=', $id)
+        ->select('mat.id','mat.nombre as mat_nombre','ca.materia_id','mat.creditos','ca.user_id')
+        ->whereNull('ca.user_id')
+        // ->orwhere('ca.user_id','!=', $id)
         ->get();
     }
 
@@ -125,8 +122,8 @@ class CargaAcademicaController extends Controller
      */
     public function destroy(Carga_Academica $carga_Academica,$id)
     {    
-        $m = Carga_Academica::find($id);
-        $m->delete();
+        $carga = Carga_Academica::find($id);
+        $carga->delete();
        
     }
 }

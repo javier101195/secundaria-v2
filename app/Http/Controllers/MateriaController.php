@@ -17,35 +17,7 @@ class MateriaController extends Controller
      */
     public function index()
     {
-
-        /* $materias = DB::table('materias')->get();*/
         
-        /* return DB::table('materias')
-        ->join ('maestros', 'materias.maestro_id', '=', 'maestros.id')
-        ->select('materias.nombre as MatNombre','materias.semestre','materias.creditos',
-        'materias.maestro_id','maestros.id as MaesId','maestros.nombre as MaesNombre')
-        ->get(); */
-
-
-        /* return (compact("mat"));  */
-        //return DB::table('materias')->get();
-        
-        /* return DB::table('materias')
-        ->join ('maestros', 'materias.maestro_id', '=', 'maestros.id')
-        ->select('materias.nombre as MatNombre','materias.semestre','materias.creditos',
-        'materias.maestro_id','maestros.id as MaesId','maestros.nombre as MaesNombre')
-        ->get(); */
-        
-
-        /* return DB::table('materias')
-        ->join ('maestros', 'materias.maestro_id', '=', 'maestros.id')
-        ->select('materias.nombre as MatNombre','materias.semestre','materias.creditos',
-        'materias.maestro_id','maestros.id as MaesId','maestros.nombre as MaesNombre')
-        ->where('materias.maestro_id','=',compact('id'))
-        ->get(); */
-        //return (compact('id'));
-
-
 
     }
 
@@ -57,13 +29,14 @@ class MateriaController extends Controller
      */
     public function store(Request $request)
     {
-
-
+        $request->validate([
+            'nombre'=>'required',
+            'semestre'=>'required|min:1|max:6|numeric',
+            'creditos'=>'required|min:1|max:5|numeric',
+            'maestro_id'=>'required'
+        ]);
         $materia = Materia::create($request->all());
-
         $materia->save();
-        
-        
     }
 
 

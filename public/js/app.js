@@ -5469,20 +5469,28 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['h', 'usuarios'],
   data: function data() {
     return {
-      carga: {
+      alumSelec: {
         user_id: '',
         materia_id: ''
       },
-      alumSelec: {
-        seleccionado: ''
+      eleccion: {
+        alu: ''
       },
-      materiaSelec: {
-        seleccionado: ''
-      },
+      arreglo: [{
+        user_id: ''
+      }],
       m: '',
       lista: '',
       listaN: '',
@@ -5490,25 +5498,32 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     };
   },
   methods: {
-    checkFluency: function checkFluency(id) {
+    guardar: function guardar(valor) {
+      var _this = this;
+
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        var res;
+        var res3;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                if (!(id != null)) {
-                  _context.next = 4;
+                if (!(valor != null)) {
+                  _context.next = 6;
                   break;
                 }
 
-                _context.next = 3;
-                return axios["delete"]('/carga_academica/' + id);
+                _this.alumSelec.user_id = _this.eleccion.alu;
+                _this.alumSelec.materia_id = valor;
+                _context.next = 5;
+                return axios.post('/carga_academica', _this.alumSelec);
 
-              case 3:
-                res = _context.sent;
+              case 5:
+                res3 = _context.sent;
 
-              case 4:
+              case 6:
+                _this.get_sectores();
+
+              case 7:
               case "end":
                 return _context.stop();
             }
@@ -5516,49 +5531,79 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee);
       }))();
     },
-    get_sectores: function () {
-      var _get_sectores = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
-        var response, responseMat, responseMatNo;
+    checkFluency: function checkFluency(id) {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+        var res;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                _context2.prev = 0;
+                if (!(id != null)) {
+                  _context2.next = 4;
+                  break;
+                }
+
                 _context2.next = 3;
-                return axios.get('consul/' + this.alumSelec.seleccionado);
+                return axios["delete"]('/carga_academica/' + id);
 
               case 3:
-                response = _context2.sent;
-                _context2.next = 6;
-                return axios.get('listaMaterias/' + this.alumSelec.seleccionado);
+                res = _context2.sent;
 
-              case 6:
-                responseMat = _context2.sent;
-                _context2.next = 9;
-                return axios.get('listaMateriasNo/' + this.alumSelec.seleccionado);
+              case 4:
+                _this2.get_sectores();
 
-              case 9:
-                responseMatNo = _context2.sent;
-                this.m = response.data;
-                this.lista = responseMat.data;
-                this.listaN = responseMatNo.data; //alert(this.lista);
-
-                console.log(m);
-                console.log(lista);
-                console.log(listaN);
-                _context2.next = 20;
-                break;
-
-              case 18:
-                _context2.prev = 18;
-                _context2.t0 = _context2["catch"](0);
-
-              case 20:
+              case 5:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2, this, [[0, 18]]);
+        }, _callee2);
+      }))();
+    },
+    get_sectores: function () {
+      var _get_sectores = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
+        var response, responseMat, responseMatNo;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.prev = 0;
+                _context3.next = 3;
+                return axios.get('consul/' + this.eleccion.alu);
+
+              case 3:
+                response = _context3.sent;
+                _context3.next = 6;
+                return axios.get('listaMaterias/' + this.eleccion.alu);
+
+              case 6:
+                responseMat = _context3.sent;
+                _context3.next = 9;
+                return axios.get('listaMateriasNo/' + this.eleccion.alu);
+
+              case 9:
+                responseMatNo = _context3.sent;
+                this.m = response.data;
+                this.lista = responseMat.data;
+                this.listaN = responseMatNo.data;
+                console.log(m);
+                console.log(lista);
+                console.log(listaN);
+                _context3.next = 20;
+                break;
+
+              case 18:
+                _context3.prev = 18;
+                _context3.t0 = _context3["catch"](0);
+
+              case 20:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, this, [[0, 18]]);
       }));
 
       function get_sectores() {
@@ -5676,22 +5721,33 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['mat', 'maes_select'],
   data: function data() {
     return {
       materia: {
-        nombre: '',
-        semestre: '',
-        creditos: '',
-        maestro_id: ''
+        nombre: null,
+        semestre: null,
+        creditos: null,
+        maestro_id: null
       },
+      errores: {},
       maestroSelec: {
         seleccionado: ''
       },
-      m: '',
-      modal: 0,
-      tituloModal: 'Registra una materia',
+      array: '',
       materias: [],
       maestros: []
     };
@@ -5758,8 +5814,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 3:
                 response = _context3.sent;
-                this.m = response.data;
-                console.log(m);
+                this.array = response.data;
+                console.log(array);
                 _context3.next = 10;
                 break;
 
@@ -5790,26 +5846,37 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
-                _context4.next = 2;
+                _context4.prev = 0;
+                _context4.next = 3;
                 return axios.post('/materias', _this3.materia);
 
-              case 2:
-                res3 = _context4.sent;
-
               case 3:
+                res3 = _context4.sent;
+                alert("Registro exitoso");
+                _context4.next = 10;
+                break;
+
+              case 7:
+                _context4.prev = 7;
+                _context4.t0 = _context4["catch"](0);
+
+                if (_context4.t0.response.data) {
+                  _this3.errores = _context4.t0.response.data.errors;
+                  window.alert("No se pudo registrar la materia verifica los campos");
+                }
+
+              case 10:
               case "end":
                 return _context4.stop();
             }
           }
-        }, _callee4);
+        }, _callee4, null, [[0, 7]]);
       }))();
     }
   },
   created: function created() {
     this.listar();
     this.listar2();
-    console.log(this.mat);
-    console.log(this.maes_select); //console.log(this.maes_select);
   }
 });
 
@@ -29276,8 +29343,8 @@ var render = function () {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.alumSelec.seleccionado,
-                expression: "alumSelec.seleccionado",
+                value: _vm.eleccion.alu,
+                expression: "eleccion.alu",
               },
             ],
             staticClass: "form-control",
@@ -29294,8 +29361,8 @@ var render = function () {
                       return val
                     })
                   _vm.$set(
-                    _vm.alumSelec,
-                    "seleccionado",
+                    _vm.eleccion,
+                    "alu",
                     $event.target.multiple ? $$selectedVal : $$selectedVal[0]
                   )
                 },
@@ -29380,9 +29447,7 @@ var render = function () {
                                   _vm._v(
                                     "\n                                    " +
                                       _vm._s(mtr.mat_nombre) +
-                                      "," +
-                                      _vm._s(mtr.id) +
-                                      "                                        \n                                    "
+                                      "                                       \n                                    "
                                   ),
                                   _c("div", [
                                     _vm._v(
@@ -29432,15 +29497,13 @@ var render = function () {
                                   _vm._v(
                                     "\n                                    " +
                                       _vm._s(mtr.mat_nombre) +
-                                      "," +
-                                      _vm._s(mtr.id) +
                                       "\n                                    "
                                   ),
                                   _c("div", [
                                     _vm._v(
                                       "\n                                        Creditos de la materia: " +
                                         _vm._s(mtr.creditos) +
-                                        "\n                                    "
+                                        "                                           \n                                        \n                                    "
                                     ),
                                   ]),
                                 ]
@@ -29450,8 +29513,13 @@ var render = function () {
                                 staticClass: "form-check-input",
                                 attrs: {
                                   type: "checkbox",
-                                  value: "",
+                                  value: "mtr.id",
                                   id: "flexCheckDefault",
+                                },
+                                on: {
+                                  click: function ($event) {
+                                    return _vm.guardar(mtr.id)
+                                  },
                                 },
                               }),
                             ]
@@ -29586,25 +29654,7 @@ var render = function () {
       [
         _c("div", { staticClass: "modal-dialog" }, [
           _c("div", { staticClass: "modal-content" }, [
-            _c("div", { staticClass: "modal-header" }, [
-              _c(
-                "h5",
-                {
-                  staticClass: "modal-title",
-                  attrs: { id: "exampleModalLabel" },
-                },
-                [_vm._v(_vm._s(_vm.tituloModal))]
-              ),
-              _vm._v(" "),
-              _c("button", {
-                staticClass: "btn-close",
-                attrs: {
-                  type: "button",
-                  "data-bs-dismiss": "modal",
-                  "aria-label": "Close",
-                },
-              }),
-            ]),
+            _vm._m(0),
             _vm._v(" "),
             _c("div", { staticClass: "modal-body" }, [
               _c("form", [
@@ -29625,7 +29675,7 @@ var render = function () {
                     staticClass: "form-control",
                     attrs: {
                       name: "nombre",
-                      type: "name",
+                      type: "text",
                       id: "nombre",
                       placeholder: "Español",
                     },
@@ -29639,6 +29689,16 @@ var render = function () {
                       },
                     },
                   }),
+                  _vm._v(" "),
+                  _vm.errores.nombre
+                    ? _c("div", { staticClass: "alert alert-danger" }, [
+                        _vm._v(
+                          "\n                                " +
+                            _vm._s(_vm.errores.nombre[0]) +
+                            "\n                            "
+                        ),
+                      ])
+                    : _vm._e(),
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "form-group my-4" }, [
@@ -29672,6 +29732,16 @@ var render = function () {
                       },
                     },
                   }),
+                  _vm._v(" "),
+                  _vm.errores.semestre
+                    ? _c("div", { staticClass: "alert alert-danger" }, [
+                        _vm._v(
+                          "\n                                " +
+                            _vm._s(_vm.errores.semestre[0]) +
+                            "\n                            "
+                        ),
+                      ])
+                    : _vm._e(),
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "form-group my-4" }, [
@@ -29694,6 +29764,7 @@ var render = function () {
                       type: "number",
                       id: "creditos",
                       placeholder: "1",
+                      max: "5",
                     },
                     domProps: { value: _vm.materia.creditos },
                     on: {
@@ -29705,6 +29776,16 @@ var render = function () {
                       },
                     },
                   }),
+                  _vm._v(" "),
+                  _vm.errores.creditos
+                    ? _c("div", { staticClass: "alert alert-danger" }, [
+                        _vm._v(
+                          "\n                                " +
+                            _vm._s(_vm.errores.creditos[0]) +
+                            "\n                            "
+                        ),
+                      ])
+                    : _vm._e(),
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "form-group my-4" }, [
@@ -29758,6 +29839,16 @@ var render = function () {
                     }),
                     0
                   ),
+                  _vm._v(" "),
+                  _vm.errores.maestro_id
+                    ? _c("div", { staticClass: "alert alert-danger" }, [
+                        _vm._v(
+                          "\n                                " +
+                            _vm._s(_vm.errores.maestro_id[0]) +
+                            "\n                            "
+                        ),
+                      ])
+                    : _vm._e(),
                 ]),
               ]),
             ]),
@@ -29776,7 +29867,7 @@ var render = function () {
                 "button",
                 {
                   staticClass: "btn btn-primary",
-                  attrs: { "data-bs-dismiss": "modal" },
+                  attrs: { "data-bs-dismiss": "modal", type: "submit" },
                   on: { click: _vm.guardar },
                 },
                 [_vm._v("Guardar")]
@@ -29803,7 +29894,6 @@ var render = function () {
               },
             ],
             staticClass: "form-control",
-            attrs: { id: "m" },
             on: {
               change: [
                 function ($event) {
@@ -29842,11 +29932,11 @@ var render = function () {
         attrs: { id: "materi" },
       },
       [
-        _vm._m(0),
+        _vm._m(1),
         _vm._v(" "),
         _c(
           "tbody",
-          _vm._l(_vm.m, function (mtr) {
+          _vm._l(_vm.array, function (mtr) {
             return _c("tr", { key: mtr.id, attrs: { for: "maestro" } }, [
               _c("td", [_vm._v(_vm._s(mtr.MatNombre))]),
               _vm._v(" "),
@@ -29864,6 +29954,27 @@ var render = function () {
   ])
 }
 var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "h5",
+        { staticClass: "modal-title", attrs: { id: "exampleModalLabel" } },
+        [_vm._v("Registra una materia")]
+      ),
+      _vm._v(" "),
+      _c("button", {
+        staticClass: "btn-close",
+        attrs: {
+          type: "button",
+          "data-bs-dismiss": "modal",
+          "aria-label": "Close",
+        },
+      }),
+    ])
+  },
   function () {
     var _vm = this
     var _h = _vm.$createElement

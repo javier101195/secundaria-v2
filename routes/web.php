@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CargaAcademicaController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MateriaController;
 use App\Http\Controllers\MaestroController;
@@ -23,20 +24,19 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/consulta/{id}', [App\Http\Controllers\HomeController::class, 'consulta'])->name('consulta');
-Route::get('/consul/{id}', [App\Http\Controllers\CargaAcademicaController::class, 'consul'])->name('consul');
-Route::get('/listaMaterias/{id}', [App\Http\Controllers\CargaAcademicaController::class, 'listaMaterias'])->name('listaMaterias');
-Route::get('/listaMateriasNo/{id}', [App\Http\Controllers\CargaAcademicaController::class, 'listaMateriasNo'])->name('listaMateriasNo');
-Route::get('/carga_academica', [App\Http\Controllers\CargaAcademicaController::class, 'index'])->name('carga_academica');
-Route::delete('/carga_academica/{id}', [App\Http\Controllers\CargaAcademicaController::class, 'destroy']);
-//Route::POST('carga_academica/', [App\Http\Controllers\CargaAcademicaController::class, 'store']);
+Route::controller(HomeController::class)->group(function(){
+    Route::get('/home', 'index')->name('home');
+    Route::get('/consulta/{id}', 'consulta')->name('consulta');
+});
+Route::controller(CargaAcademicaController::class)->group(function(){
+    Route::get('/carga_academica', 'index')->middleware('auth')->name('carga_academica');
+    Route::post('/carga_academica', 'store');
+    Route::delete('/carga_academica/{id}', 'destroy');
+    Route::get('/consul/{id}','consul')->name('consul');
+    Route::get('/listaMaterias/{id}','listaMaterias')->name('listaMaterias');
+    Route::get('/listaMateriasNo/{id}','listaMateriasNo')->name('listaMateriasNo');
+});
 
 Route::ApiResource('maestros', MaestroController::class)->middleware('auth');
 Route::ApiResource('materias', MateriaController::class)->middleware('auth');
 Route::ApiResource('users', UserController::class)->middleware('auth');
-//Route::ApiResource('carga_academica',CargaAcademicaController::class)->middleware('auth');
-//Route::ApiResource('carga_academica', CargaAcademicaController::class)->middleware('auth');
-
-
